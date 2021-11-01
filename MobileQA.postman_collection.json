@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "525f0fd9-ff21-4ee4-b4f9-df0f9692bb14",
+		"name": "MobileQA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Author details along with Bio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"check status code\"] = responseCode.code == 200;\r",
+							"\r",
+							"var responsePayload = JSON.parse(responseBody);\r",
+							"tests [\"Check personal name of the Author\"] = responsePayload.personal_name == \"Sachi Rautroy\";\r",
+							"\r",
+							"pm.test(\"check Access-Control-Max-Age Header\", function ()\r",
+							"{\r",
+							"    pm.response.to.be.header(\"Access-Control-Max-Age\", '86400');\r",
+							"}\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://openlibrary.org/authors/OL1A.json",
+					"protocol": "http",
+					"host": [
+						"openlibrary",
+						"org"
+					],
+					"path": [
+						"authors",
+						"OL1A.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create employee with details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"check status code\"] = responseCode.code == 200;\r",
+							"\r",
+							"var responsePayload = JSON.parse(responseBody);\r",
+							"tests[\"check status at the proper position in the response\"]=responsePayload.status == \"success\";\r",
+							"tests[\"checking Record added information\"]=responsePayload.message == \"Successfully! Record has been added.\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"John32\",\r\n    \"salary\":\"100009\",\r\n    \"age\":\"29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummy.restapiexample.com/api/v1/create",
+					"protocol": "https",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login fail with unknown user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"check status code\"] = responseCode.code == 400;\r",
+							"\r",
+							"var responsePayload = JSON.parse(responseBody);\r",
+							"tests[\"Login Fail with Wrong user id\"]=responsePayload.error == \"user not found\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"email\": \"peter@halloworld\",\r\n    \"password\": \"Secret\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/login",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleting User with id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"check status code\"] = responseCode.code == 200;\r",
+							"\r",
+							"var responsePayload = JSON.parse(responseBody);\r",
+							"tests[\"Checking Record delete\"]=responsePayload.message == \"Successfully! Record has been deleted\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/delete/2",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
